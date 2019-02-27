@@ -47,7 +47,7 @@ export default {
       for (let len = 0; len < back_len; len++) {
         for (let wid = 0; wid < back_wid; wid++) {
           var backimg = new Image();
-          backimg.src = `./block/grass_plains.png?${new Date().getTime()}`
+          backimg.src = `../block/grass_plains.png?${new Date().getTime()}`
           backimg.onload = function() {
             var backx = (len*size);
             var backy = (wid*size);
@@ -60,7 +60,7 @@ export default {
       for (let len = 0; len < this.road.leng; len++) {
         for (let wid = 0; wid < this.road.wid; wid++) {
           var img = new Image();
-          img.src = `./block/${this.blocks[0].id}.png?${new Date().getTime()}`
+          img.src = `../block/${this.blocks[0].id}.png?${new Date().getTime()}`
           // 画像読み込み後に描画
           img.onload = function() {
             x = left + (len * size);

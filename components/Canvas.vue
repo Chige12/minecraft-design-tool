@@ -1,6 +1,5 @@
 <template lang="pug">
   .canvas
-    canvas#back(width="800px" height="400px")
     canvas#canvas(width="800px" height="400px")
 </template>
 <script>
@@ -21,7 +20,6 @@ export default {
   },
   mounted(){
     this.$nextTick(() => {
-      this.drawBack();
       this.draw();
     })
   },
@@ -45,8 +43,24 @@ export default {
       var rad = 0;
       var x,y = 0
 
-      var imgs = []
+      var back_len = this.canvas.width / size
+      var back_wid = this.canvas.height / size
+    
+      var backimgs = []
+      for (let len = 0; len < back_len; len++) {
+        backimgs.push([])
+        for (let wid = 0; wid < back_wid; wid++) {
+          backimgs[len].push(new Image())
+          backimgs[len][wid].src = `../block/grass_plains.png?${new Date().getTime()}`
+          backimgs[len][wid].onload = function() {
+            var backx = (len*size);
+            var backy = (wid*size);
+            ctx.drawImage(backimg, backx, backy, size, size);
+          }
+        }
+      }
 
+      var imgs = []
       for (let len = 0; len < this.road.leng; len++) {
         imgs.push([])
         for (let wid = 0; wid < this.road.wid; wid++) {
@@ -57,39 +71,6 @@ export default {
             x = left + (len * size);
             y = top + (wid * size);
             ctx.drawImage(imgs[len][wid], x, y, size, size);
-          }
-        }
-      }
-    },
-    drawBack(){
-      var canvas = document.getElementById('back');
-      if ( ! canvas || ! canvas.getContext ) { return false; }
-      var ctx = canvas.getContext('2d');
-
-      /* スムージングを無効化 */
-        ctx.imageSmoothingEnabled = false;
-        ctx.mozImageSmoothingEnabled = false;
-        ctx.webkitImageSmoothingEnabled = false;
-        ctx.msImageSmoothingEnabled = false;
-      
-      var size = this.ImageSize()
-      var top = this.StartPoint(size).top
-      var left = this.StartPoint(size).left
-
-      var angle = 0;
-      var rad = 0;
-      var x,y = 0
-
-      var back_len = this.canvas.width / size
-      var back_wid = this.canvas.height / size
-      for (let len = 0; len < back_len; len++) {
-        for (let wid = 0; wid < back_wid; wid++) {
-          var backimg = new Image();
-          backimg.src = `../block/grass_plains.png?${new Date().getTime()}`
-          backimg.onload = function() {
-            var backx = (len*size);
-            var backy = (wid*size);
-            ctx.drawImage(backimg, backx, backy, size, size);
           }
         }
       }

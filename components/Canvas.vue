@@ -1,5 +1,7 @@
 <template lang="pug">
-  canvas#canvas(width="800px" height="400px")
+  .canvas
+    canvas#back(width="800px" height="400px")
+    canvas#canvas(width="800px" height="400px")
 </template>
 <script>
 export default {
@@ -19,12 +21,45 @@ export default {
   },
   mounted(){
     this.$nextTick(() => {
+      this.drawBack();
       this.draw();
     })
   },
   methods: {
     draw(){
       var canvas = document.getElementById('canvas');
+      if ( ! canvas || ! canvas.getContext ) { return false; }
+      var ctx = canvas.getContext('2d');
+
+      /* スムージングを無効化 */
+        ctx.imageSmoothingEnabled = false;
+        ctx.mozImageSmoothingEnabled = false;
+        ctx.webkitImageSmoothingEnabled = false;
+        ctx.msImageSmoothingEnabled = false;
+      
+      var size = this.ImageSize()
+      var top = this.StartPoint(size).top
+      var left = this.StartPoint(size).left
+
+      var angle = 0;
+      var rad = 0;
+      var x,y = 0
+
+      for (let len = 0; len < this.road.leng; len++) {
+        for (let wid = 0; wid < this.road.wid; wid++) {
+          var img = new Image();
+          img.src = `../block/${this.blocks[0].id}.png?${new Date().getTime()}`
+          // 画像読み込み後に描画
+          img.onload = function() {
+            x = left + (len * size);
+            y = top + (wid * size);
+            ctx.drawImage(img, x, y, size, size);
+          }
+        }
+      }
+    },
+    drawBack(){
+      var canvas = document.getElementById('back');
       if ( ! canvas || ! canvas.getContext ) { return false; }
       var ctx = canvas.getContext('2d');
 
@@ -56,19 +91,6 @@ export default {
           }
         }
       }
-
-      for (let len = 0; len < this.road.leng; len++) {
-        for (let wid = 0; wid < this.road.wid; wid++) {
-          var img = new Image();
-          img.src = `../block/${this.blocks[0].id}.png?${new Date().getTime()}`
-          // 画像読み込み後に描画
-          img.onload = function() {
-            x = left + (len * size);
-            y = top + (wid * size);
-            ctx.drawImage(img, x, y, size, size);
-          }
-        }
-      }
     },
     ImageSize(){
       var width = (this.canvas.width) / (this.road.leng+2)
@@ -92,8 +114,14 @@ export default {
 }
 </script>
 <style lang="scss">
-#canvas {
-  width: 800px;
-  height: 400px;
+.canvas {
+  position: relative;
+  canvas{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 800px;
+    height: 400px;
+  }
 }
 </style>

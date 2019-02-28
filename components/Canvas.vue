@@ -55,7 +55,7 @@ export default {
           backimgs[len][wid].onload = function() {
             var backx = (len*size);
             var backy = (wid*size);
-            ctx.drawImage(backimg, backx, backy, size, size);
+            ctx.drawImage(backimgs[len][wid], backx, backy, size, size);
           }
         }
       }

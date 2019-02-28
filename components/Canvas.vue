@@ -45,15 +45,18 @@ export default {
       var rad = 0;
       var x,y = 0
 
+      var imgs = []
+
       for (let len = 0; len < this.road.leng; len++) {
+        imgs.push([])
         for (let wid = 0; wid < this.road.wid; wid++) {
-          var img = new Image();
-          img.src = `../block/${this.blocks[0].id}.png?${new Date().getTime()}`
+          imgs[len].push(new Image())
+          imgs[len][wid].src = `../block/${this.RandomBlock()}.png?${new Date().getTime()}`
           // 画像読み込み後に描画
-          img.onload = function() {
+          imgs[len][wid].onload = function() {
             x = left + (len * size);
             y = top + (wid * size);
-            ctx.drawImage(img, x, y, size, size);
+            ctx.drawImage(imgs[len][wid], x, y, size, size);
           }
         }
       }
@@ -86,7 +89,6 @@ export default {
           backimg.onload = function() {
             var backx = (len*size);
             var backy = (wid*size);
-            console.log(backx)
             ctx.drawImage(backimg, backx, backy, size, size);
           }
         }
@@ -104,11 +106,21 @@ export default {
       var left = (this.canvas.width / 2) - (road_length / 2)
       return {top:top,left:left}
     },
-    GetRandomNumber(num) {
-      return Math.floor( Math.random() * num );//0 ~ (num-1)
-    },
     RandomBlock(){
-      //% random(0~2)
+      var percent_blocks = []
+      for (let i = 0; i < this.blocks.length; i++) {
+        for (let j = 0; j < this.blocks[i].per; j++) {
+          percent_blocks.push(this.blocks[i].id)
+        }
+      }
+      if(percent_blocks.length){
+        var random = Math.floor( Math.random()*100 );//0 ~ 99
+        console.log("percent is 100% : "+percent_blocks[random])
+        return percent_blocks[random]
+      }else{
+        console.log("percent is not 100%")
+        return "grass_path_top"
+      }
     }
   }
 }

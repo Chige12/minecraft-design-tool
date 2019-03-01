@@ -14,16 +14,40 @@ export default {
       image_size: 30,
       road:{
         wid: 3,
-        leng: 20
-      }
+        leng: 24
+      },
+      image_file:[]
     }
   },
   mounted(){
     this.$nextTick(() => {
-      this.draw();
+      this.imageLoad()
     })
   },
   methods: {
+    imageLoad(){
+      var image_file = []
+      var block_length = this.blocks.length;
+      for(let i=0; i < block_length; i++){
+        image_file.push({
+          id: this.blocks[i].id,
+          img: new Image(),
+          load: false
+        })
+        image_file[i].img.src = `../block/${this.blocks[i].id}.png?${new Date().getTime()}`
+        image_file[i].img.onload = () => {
+          image_file[i].load = true;
+          if(i+1 >= block_length){
+            console.log(`load success!  ${i+1}/${block_length}`)
+            this.image_file = image_file;
+            // 画像読み込み後に描画
+            this.draw();
+          }else{
+            console.log(`now loading... ${i+1}/${block_length}`)
+          }
+        }
+      }
+    },
     draw(){
       var canvas = document.getElementById('canvas');
       if ( ! canvas || ! canvas.getContext ) { return false; }
@@ -45,39 +69,34 @@ export default {
 
       var back_len = this.canvas.width / size
       var back_wid = this.canvas.height / size
-    
-      var backimgs = []
+
+      var grass = this.image_file.find((file) => {
+          return (file.id === 'grass_plains');
+      });
       for (let len = 0; len < back_len; len++) {
-        backimgs.push([])
-        for (let wid = 0; wid < back_wid; wid++) {
-          backimgs[len].push(new Image())
-          backimgs[len][wid].src = `../block/grass_plains.png?${new Date().getTime()}`
-          backimgs[len][wid].onload = function() {
-            var backx = (len*size);
-            var backy = (wid*size);
-            ctx.drawImage(backimgs[len][wid], backx, backy, size, size);
-          }
+        for (let wid = 0; wid < back_wid+1; wid++) {
+          var backx = (len*size);
+          var backy = (wid*size) - (top%size);
+          ctx.drawImage(grass.img, backx, backy, size, size);
         }
       }
 
-      var imgs = []
+      var any_block
       for (let len = 0; len < this.road.leng; len++) {
-        imgs.push([])
         for (let wid = 0; wid < this.road.wid; wid++) {
-          imgs[len].push(new Image())
-          imgs[len][wid].src = `../block/${this.RandomBlock()}.png?${new Date().getTime()}`
-          // 画像読み込み後に描画
-          imgs[len][wid].onload = function() {
-            x = left + (len * size);
-            y = top + (wid * size);
-            ctx.drawImage(imgs[len][wid], x, y, size, size);
-          }
+          var any_block_id = this.RandomBlock()
+          any_block = this.image_file.find((img) => {
+              return (img.id === any_block_id);
+          });
+          x = left + (len * size);
+          y = top + (wid * size);
+          ctx.drawImage(any_block.img, x, y, size, size);
         }
       }
     },
     ImageSize(){
-      var width = (this.canvas.width) / (this.road.leng+2)
-      var height = (this.canvas.height) / (this.road.wid+2)
+      var width = (this.canvas.width) / (this.road.leng)
+      var height = (this.canvas.height) / (this.road.wid)
       return Math.min(width,height);
     },
     StartPoint(size){
@@ -96,10 +115,8 @@ export default {
       }
       if(percent_blocks.length){
         var random = Math.floor( Math.random()*100 );//0 ~ 99
-        console.log("percent is 100% : "+percent_blocks[random])
         return percent_blocks[random]
       }else{
-        console.log("percent is not 100%")
         return "grass_path_top"
       }
     }

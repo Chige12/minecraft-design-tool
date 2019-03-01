@@ -15,21 +15,16 @@
             .list_block-text
               .name {{list_block.jp}}
       .percent
-        v-slider(v-model="block.per" :label="`${block.per}%`" inverse-label)
+        v-slider(v-model="block.per" :label="`${block.per}%`" inverse-label @change="blockPerChange")
 
 </template>
 <script>
 import BlockData from '~/assets/json/block_data.json'
 
 export default {
+  props:["block","list_id"],
   data(){
     return{
-      block: {
-        id: "grass_path_top",
-        name: "Grass Path",
-        jp: "小道",
-        per: "80"
-      },
       selector_list_open: false,
       block_data: BlockData
     }
@@ -46,9 +41,11 @@ export default {
       this.block.id = this.block_data[id].id
       this.block.name = this.block_data[id].name
       this.block.jp = this.block_data[id].jp
-      this.block.per = this.block_data[id].per
       this.selector_list_open = false
-      this.$emit('blockSelect',this.block);
+      this.$emit('blockSelect',this.block,this.list_id);
+    },
+    blockPerChange(){
+      this.$emit('blockSelect',this.block,this.list_id);
     }
   }
 }

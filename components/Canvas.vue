@@ -3,6 +3,7 @@
     canvas#canvas(width="800px" height="400px")
 </template>
 <script>
+import BlockData from '~/assets/json/block_data.json'
 export default {
   props:["blocks"],
   data(){
@@ -16,7 +17,8 @@ export default {
         wid: 3,
         leng: 24
       },
-      image_file:[]
+      image_file:[],
+      block_data: BlockData
     }
   },
   mounted(){
@@ -27,14 +29,14 @@ export default {
   methods: {
     imageLoad(){
       var image_file = []
-      var block_length = this.blocks.length;
+      var block_length = this.block_data.length;
       for(let i=0; i < block_length; i++){
         image_file.push({
-          id: this.blocks[i].id,
+          id: this.block_data[i].id,
           img: new Image(),
           load: false
         })
-        image_file[i].img.src = `../block/${this.blocks[i].id}.png?${new Date().getTime()}`
+        image_file[i].img.src = `../block/${this.block_data[i].id}.png?${new Date().getTime()}`
         image_file[i].img.onload = () => {
           image_file[i].load = true;
           if(i+1 >= block_length){
@@ -80,17 +82,18 @@ export default {
           ctx.drawImage(grass.img, backx, backy, size, size);
         }
       }
-
-      var any_block
-      for (let len = 0; len < this.road.leng; len++) {
-        for (let wid = 0; wid < this.road.wid; wid++) {
-          var any_block_id = this.RandomBlock()
-          any_block = this.image_file.find((img) => {
-              return (img.id === any_block_id);
-          });
-          x = left + (len * size);
-          y = top + (wid * size);
-          ctx.drawImage(any_block.img, x, y, size, size);
+      if(this.blocks.length!==0){
+        var any_block
+        for (let len = 0; len < this.road.leng; len++) {
+          for (let wid = 0; wid < this.road.wid; wid++) {
+            var any_block_id = this.RandomBlock()
+            any_block = this.image_file.find((img) => {
+                return (img.id === any_block_id);
+            });
+            x = left + (len * size);
+            y = top + (wid * size);
+            ctx.drawImage(any_block.img, x, y, size, size);
+          }
         }
       }
     },

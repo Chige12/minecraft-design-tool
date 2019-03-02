@@ -29,9 +29,9 @@
       <v-toolbar-side-icon @click="drawer = !drawer" />
       <v-toolbar-title v-text="title" />
       <v-spacer />
-      <v-btn icon @click.stop="rightDrawer = !rightDrawer">
+      <!--<v-btn icon @click.stop="rightDrawer = !rightDrawer">
         <v-icon>fas fa-cog</v-icon>
-      </v-btn>
+      </v-btn>-->
     </v-toolbar>
     <v-content>
         <nuxt />

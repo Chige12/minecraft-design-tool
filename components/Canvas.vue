@@ -1,6 +1,10 @@
 <template lang="pug">
   .canvas
     canvas#canvas(width="1200px" height="500px")
+    .loading(v-if="loading")
+      .loading-wrapper
+        v-icon.icon fas fa-spinner
+        .loading-text Now loading ...
 </template>
 <script>
 import BlockData from '~/assets/json/block_data.json'
@@ -17,7 +21,8 @@ export default {
       image_file:[],
       block_data: BlockData,
       biomes:["plains","forest","desert","swamp","tundra"],
-      biome:"plains"
+      biome:"plains",
+      loading:true,
     }
   },
   mounted(){
@@ -53,6 +58,7 @@ export default {
                 image_file[block_length+j].load = true;
                 if(j+1 >= this.biomes.length){
                   this.image_file = image_file;
+                  this.loading = false
                   this.draw();
                 }
               }
@@ -173,6 +179,30 @@ export default {
   position: relative;
   width: 1200px;
   height: 500px;
+  background: #44662e;
+  .loading{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 60px 0;
+    .loading-wrapper {
+      position: absolute;
+      margin: auto;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      height: min-content;
+      .icon {
+        font-size: 30px;
+        animation: loading 2s linear 0s infinite;
+      }
+      .loading-text {
+        font-size: 20px;
+      }
+    }
+
+  }
 }
 canvas{
   position: absolute;
@@ -180,5 +210,9 @@ canvas{
   left: 0;
   width: 1200px;
   height: 500px;
+}
+@keyframes loading {
+0% {transform: rotateZ(0deg)}
+100% {transform: rotateZ(360deg)}
 }
 </style>

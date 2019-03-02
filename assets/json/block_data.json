@@ -306,12 +306,6 @@
     "per":0
   },
   {
-    "id":"mushroom_block_inside",
-    "name":"Mushroom Block Inside",
-    "jp":"きのこブロック",
-    "per":0
-  },
-  {
     "id":"mycelium_top",
     "name":"Mycelium_top",
     "jp":"菌糸",

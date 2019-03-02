@@ -1,9 +1,15 @@
 <template lang="pug">
 .road_design
-  Canvas(:blocks="select_block_data" ref="canvas").canvas-parent
+  .view_box
+    .view_canvas
+      Canvas(:blocks="select_block_data" ref="canvas").canvas-parent
+    .view_setting
+      Setting(@settingUpdate="settingUpdate")
   .block-lists
     .block-list(v-for="(sel_block,sel_block_id) in select_block_data" :key="`key-${sel_block_id}`")
-      BlockSelect(@blockSelect="blockSelect" @blockDelete="blockDelete" :block="sel_block" :disabled="disabled")
+      BlockSelect(@blockSelect="blockSelect" :block="sel_block")
+      .percent
+        v-slider(v-model="sel_block.per" :label="`${sel_block.per}%`" @change="blockSelect(sel_block)" thumb-label :disabled="disabled")
     .button.list-add-button(@click="blockAdd()")
       v-icon.icon fas fa-plus
       .text ブロックを追加
@@ -14,24 +20,19 @@
 <script>
 import BlockSelect from '~/components/BlockSelect.vue'
 import Canvas from '~/components/Canvas.vue'
+import Setting from '~/components/Setting.vue'
 import BlockData from '~/assets/json/block_data.json'
 
 export default {
   components: {
     BlockSelect,
-    Canvas
+    Canvas,
+    Setting
   },
   mounted(){
   },
   data(){
     return{
-      biomes:[
-        {id:"plains"},
-        {id:"forest"},
-        {id:"desert"},
-        {id:"swamp"},
-        {id:"tundra"}
-      ],
       select_block_data:[
         {
           list_id: 0,
@@ -122,6 +123,9 @@ export default {
     },
     draw(){
       this.$refs.canvas.draw();
+    },
+    settingUpdate(property,data){
+      this.$refs.canvas.settingUpdate(property,data);
     }
   }
 }
@@ -129,19 +133,41 @@ export default {
 <style lang="scss">
 .road_design{
   position: relative;
-  padding-top: 400px;
-  .canvas-parent {
-    position: absolute;
-    display: block;
-    margin: auto;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 1200px;
-    height: 400px;
+  .view_box {
+    display: flex;
+    flex-wrap: nowrap;
+    .view_canvas {
+      height: auto;
+      flex-shrink: 0;
+    }
+    .view_setting {
+      width: 100%;
+      height: 100%;
+    }
   }
   .block-lists {
     margin-top: 40px;
+    .block-list {
+      display: flex;
+      flex-wrap: nowrap;
+      .percent {
+        padding-left: 18px;
+        padding-top: 8px;
+        width: 100%;
+        .v-input--slider{
+          margin: 0;
+          .v-input__slot{
+            margin: 0;
+            .v-label {
+              width: 45px;
+            }
+          }
+          .v-messages{
+            display: none;
+          }
+        }
+      }
+    }
     .button {
       width: 230px;
       display: flex;
@@ -170,4 +196,5 @@ export default {
     }
   }
 }
+
 </style>

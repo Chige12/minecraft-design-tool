@@ -1,6 +1,6 @@
 <template lang="pug">
   .canvas
-    canvas#canvas(width="1200px" height="400px")
+    canvas#canvas(width="1200px" height="500px")
 </template>
 <script>
 import BlockData from '~/assets/json/block_data.json'
@@ -10,13 +10,14 @@ export default {
     return {
       canvas:{
         width:"1200",
-        height:"400"
+        height:"500"
       },
       image_size: 30,
       road:{
         wid: 3,
         leng: 24
       },
+      backimg_id:'grass_plains',
       image_file:[],
       block_data: BlockData
     }
@@ -72,14 +73,14 @@ export default {
       var back_len = this.canvas.width / size
       var back_wid = this.canvas.height / size
 
-      var grass = this.image_file.find((file) => {
-          return (file.id === 'grass_plains');
+      var backimg = this.image_file.find((file) => {
+          return (file.id === this.backimg_id);
       });
       for (let len = 0; len < back_len; len++) {
         for (let wid = 0; wid < back_wid+1; wid++) {
           var backx = (len*size);
           var backy = (wid*size) - (top%size);
-          ctx.drawImage(grass.img, backx, backy, size, size);
+          ctx.drawImage(backimg.img, backx, backy, size, size);
         }
       }
       if(this.blocks.length!==0){
@@ -122,16 +123,27 @@ export default {
       }else{
         return "grass_path_top"
       }
+    },
+    settingUpdate(property,data){
+      if(property=='block'){
+        this.backimg_id = data.id
+        this.draw();
+      }
     }
   }
 }
 </script>
 <style lang="scss">
+.canvas{
+  position: relative;
+  width: 1200px;
+  height: 500px;
+}
 canvas{
   position: absolute;
   top: 0;
   left: 0;
   width: 1200px;
-  height: 400px;
+  height: 500px;
 }
 </style>

@@ -1,32 +1,25 @@
 <template lang="pug">
   .blockSelector
-    .selector
-      .blockData-list
-        .list-openButton(@click="blockSelectorOpen()")
-          .block-image
-            img.image(:src="`../block/${block.id}.png`")
-          .block-text
-            .jpName {{block.jp}}
-            .enName {{block.name}}
-          //- .block-delete(@click="blockDelete()")
-            v-icon.icon fas fa-times-circle
-        .percent
-          v-slider(v-model="block.per" :label="`${block.per}%`" @change="blockPerChange" thumb-label :disabled="disabled")
-      .selector-lists(v-if="selector_list_open")
-        .selector-list(v-for="(list_block,list_block_id) in block_data" :key="`key-${list_block_id}`" :class="{'active':(block.id==list_block.id)}")
-          .select_button(@click="blockSelect(list_block_id)")
-            .list_block_image
-              img.image(:src="`../block/${list_block.id}.png`")
-            .list_block-text
-              .name {{list_block.jp}}
-      
-
+    .blockData-list
+      .list-openButton(@click="blockSelectorOpen()")
+        .block-image
+          img.image(:src="`../block/${block.id}.png`")
+        .block-text
+          .jpName {{block.jp}}
+          .enName {{block.name}}
+    .selector-lists(v-if="selector_list_open")
+      .selector-list(v-for="(list_block,list_block_id) in block_data" :key="`key-${list_block_id}`" :class="{'active':(block.id==list_block.id)}")
+        .select_button(@click="blockSelect(list_block_id)")
+          .list_block_image
+            img.image(:src="`../block/${list_block.id}.png`")
+          .list_block-text
+            .name {{list_block.jp}}
 </template>
 <script>
 import BlockData from '~/assets/json/block_data.json'
 
 export default {
-  props:["block","disabled"],
+  props:["block"],
   data(){
     return{
       selector_list_open: false,
@@ -48,104 +41,76 @@ export default {
       this.block.jp = this.block_data[id].jp
       this.selector_list_open = false
       this.$emit('blockSelect',this.block);
-    },
-    blockPerChange(){
-      this.$emit('blockSelect',this.block);
-    },
-    blockDelete(){
-      this.$emit('blockDelete',this.block.list_id);
     }
   }
 }
 </script>
 <style lang="scss">
 .blockSelector{
-  .selector{
-    position: relative;
-    padding: 0 18px;
-    .blockData-list{
+  position: relative;
+  padding: 0 18px;
+  .blockData-list{
+    .list-openButton{
       display: flex;
       flex-wrap: nowrap;
-      .list-openButton{
+      align-items: center;
+      width: 230px;
+      padding: 4px;
+      height: auto;
+      cursor: pointer;
+      .block-image{
+        flex-shrink: 0;
+        height: 40px;
+        img.image {
+          display: inline-block;
+          width: 40px;
+          height: 40px;
+          image-rendering:pixelated;
+        }
+      }
+      .block-text{
+        padding-left: 12px;
+        width: auto;
+      }
+      &:hover{
+        background: #222;
+      }
+    }
+  }
+  .selector-lists{
+    position: absolute;
+    top: auto;
+    left: 18px;
+    z-index: 1000;
+    background: #222;
+    margin: auto;
+    width: 230px;
+    padding: 8px 0;
+    .selector-list {
+      padding: 2px 16px;
+      .select_button {
         display: flex;
         flex-wrap: nowrap;
         align-items: center;
-        width: 230px;
-        flex-shrink: 0;
-        padding: 4px;
-        height: auto;
         cursor: pointer;
-        .block-image{
-          flex-shrink: 0;
-          height: 40px;
+        .list_block_image {
           img.image {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
+            display: block;
+            width: 20px;
+            height: 20px;
             image-rendering:pixelated;
           }
         }
-        .block-text{
+        .list_block-text {
           padding-left: 12px;
-          width: auto;
-        }
-        &:hover{
-          background: #222;
         }
       }
-      .percent {
-        padding-left: 18px;
-        padding-top: 8px;
-        width: 100%;
-        .v-input--slider{
-          margin: 0;
-          .v-input__slot{
-            margin: 0;
-            .v-label {
-              width: 45px;
-            }
-          }
-          .v-messages{
-            display: none;
-          }
-        }
+      &:hover{
+        background: #151515;
       }
     }
-    .selector-lists{
-      position: absolute;
-      top: auto;
-      left: 18px;
-      z-index: 1000;
-      background: #222;
-      margin: auto;
-      width: 230px;
-      padding: 8px 0;
-      .selector-list {
-        padding: 2px 16px;
-        .select_button {
-          display: flex;
-          flex-wrap: nowrap;
-          align-items: center;
-          cursor: pointer;
-          .list_block_image {
-            img.image {
-              display: block;
-              width: 20px;
-              height: 20px;
-              image-rendering:pixelated;
-            }
-          }
-          .list_block-text {
-            padding-left: 12px;
-          }
-        }
-        &:hover{
-          background: #151515;
-        }
-      }
-      .active{
-        background: #121212;
-      }
+    .active{
+      background: #121212;
     }
   }
 }

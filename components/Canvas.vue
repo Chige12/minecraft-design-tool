@@ -15,7 +15,9 @@ export default {
       image_size: 30,
       backimg_id:'grass_plains',
       image_file:[],
-      block_data: BlockData
+      block_data: BlockData,
+      biomes:["plains","forest","desert","swamp","tundra"],
+      biome:"plains"
     }
   },
   mounted(){
@@ -39,8 +41,23 @@ export default {
           if(i+1 >= block_length){
             console.log(`load success!  ${i+1}/${block_length}`)
             this.image_file = image_file;
-            // 画像読み込み後に描画
-            this.draw();
+
+            for (let j = 0; j < this.biomes.length; j++) {
+              image_file.push({
+                id:`grass_${this.biomes[j]}`,
+                img: new Image(),
+                load: false
+              })
+              image_file[block_length+j].img.src = `../block/grass_${this.biomes[j]}.png?${new Date().getTime()}`
+              image_file[block_length+j].img.onload = () => {
+                image_file[block_length+j].load = true;
+                if(j+1 >= this.biomes.length){
+                  this.image_file = image_file;
+                  this.draw();
+                }
+              }
+            }
+
           }else{
             console.log(`now loading... ${i+1}/${block_length}`)
           }
@@ -69,8 +86,15 @@ export default {
       var back_len = this.canvas.width / size
       var back_wid = this.canvas.height / size
 
+      var temp_backimg = ''
+      if(this.backimg_id=='grass_plains'){
+        temp_backimg = `grass_${this.biome}`
+      }else{
+        temp_backimg = this.backimg_id
+      }
+
       var backimg = this.image_file.find((file) => {
-          return (file.id === this.backimg_id);
+          return (file.id === temp_backimg);
       });
       for (let len = 0; len < back_len; len++) {
         for (let wid = 0; wid < back_wid+1; wid++) {
@@ -115,7 +139,12 @@ export default {
       }
       if(percent_blocks.length){
         var random = Math.floor( Math.random()*100 );//0 ~ 99
-        return percent_blocks[random]
+        var random_block = percent_blocks[random]
+        if(random_block=='grass_plains'){
+          return `grass_${this.biome}`
+        }else{
+          return random_block
+        }
       }else{
         return "grass_path_top"
       }
@@ -129,6 +158,10 @@ export default {
         this.draw();
       }else if(property=='road_leng'){
         this.road.leng = data
+        this.draw();
+      }else if(property=='biome'){
+        this.biome = data
+        console.log(this.biome)
         this.draw();
       }
     }

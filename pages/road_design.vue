@@ -153,12 +153,12 @@ export default {
       margin-left: 18px;
       background: #262626;
       border-radius: 20px;
+      cursor: pointer;
       .icon {
         display: block;
         text-align: center;
         font-size: 14px;
         padding: 6px;
-        cursor: pointer;
       }
       .text{
         width: 140px;

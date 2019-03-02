@@ -5,7 +5,7 @@
 <script>
 import BlockData from '~/assets/json/block_data.json'
 export default {
-  props:["blocks"],
+  props:["blocks","road"],
   data(){
     return {
       canvas:{
@@ -13,10 +13,6 @@ export default {
         height:"500"
       },
       image_size: 30,
-      road:{
-        wid: 3,
-        leng: 24
-      },
       backimg_id:'grass_plains',
       image_file:[],
       block_data: BlockData
@@ -127,6 +123,12 @@ export default {
     settingUpdate(property,data){
       if(property=='block'){
         this.backimg_id = data.id
+        this.draw();
+      }else if(property=='road_wid'){
+        this.road.wid = data
+        this.draw();
+      }else if(property=='road_leng'){
+        this.road.leng = data
         this.draw();
       }
     }

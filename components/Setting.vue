@@ -1,6 +1,13 @@
 <template lang="pug">
   .setting
-    BlockSelect(@blockSelect="blockSelect" :block="back_img_data")
+    .setting-property.setting-backimg
+      .setting-property-name 背景画像の変更
+      BlockSelect(@blockSelect="blockSelect" :block="back_img_data")
+    .setting-property.setting-road
+      .road_wid
+        v-text-field(v-model.number="road.wid" label="道幅" type="number" @change="roadWidChange()")
+      .road_leng
+        v-text-field(v-model.number="road.leng" label="道の長さ" type="number" @change="roadLengChange()")
     
 </template>
 <script>
@@ -9,6 +16,7 @@ export default {
   components:{
     BlockSelect
   },
+  props:["road"],
   data(){
     return{
       back_img_data:{
@@ -17,10 +25,6 @@ export default {
         name: "Grass",
         jp: "草ブロック",
         per: 0
-      },
-      road:{
-        wid: 3,
-        leng: 24
       },
       biomes:["plains","forest","desert","swamp","tundra"],
     }
@@ -31,7 +35,29 @@ export default {
         //biome change
       }
       this.$emit('settingUpdate','block',block);
+    },
+    roadWidChange(){
+      this.$emit('settingUpdate','road_wid',this.road.wid);
+    },
+    roadLengChange(){
+      this.$emit('settingUpdate','road_leng',this.road.leng);
     }
   }
 }
 </script>
+<style lang="scss">
+.setting{
+  padding: 20px;
+  .setting-property {
+    padding: 12px 0;
+  }
+  .setting-road{
+    display: flex;
+    flex-wrap: nowrap;
+    .road_wid, .road_leng{
+      padding: 0 6px ;
+    }
+  }
+      
+}
+</style>

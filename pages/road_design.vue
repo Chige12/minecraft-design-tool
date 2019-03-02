@@ -2,9 +2,9 @@
 .road_design
   .view_box
     .view_canvas
-      Canvas(:blocks="select_block_data" ref="canvas").canvas-parent
+      Canvas(:blocks="select_block_data" ref="canvas" :road="road").canvas-parent
     .view_setting
-      Setting(@settingUpdate="settingUpdate")
+      Setting(@settingUpdate="settingUpdate" :road="road")
   .block-lists
     .block-list(v-for="(sel_block,sel_block_id) in select_block_data" :key="`key-${sel_block_id}`")
       BlockSelect(@blockSelect="blockSelect" :block="sel_block")
@@ -43,7 +43,11 @@ export default {
         }
       ],
       block_data: BlockData,
-      disabled: true
+      disabled: true,
+      road:{
+        wid: 3,
+        leng: 24
+      },
     }
   },
   methods:{
@@ -150,6 +154,7 @@ export default {
     .block-list {
       display: flex;
       flex-wrap: nowrap;
+      padding: 0 18px;
       .percent {
         padding-left: 18px;
         padding-top: 8px;

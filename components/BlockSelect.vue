@@ -48,7 +48,6 @@ export default {
 <style lang="scss">
 .blockSelector{
   position: relative;
-  padding: 0 18px;
   .blockData-list{
     .list-openButton{
       display: flex;
@@ -80,7 +79,7 @@ export default {
   .selector-lists{
     position: absolute;
     top: auto;
-    left: 18px;
+    left: 0;
     z-index: 1000;
     background: #222;
     margin: auto;

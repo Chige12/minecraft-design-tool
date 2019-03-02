@@ -94,5 +94,239 @@
     "name":"Mossy Stone Bricks",
     "jp":"苔生した石レンガ",
     "per":0
+  },
+  {
+    "id":"stone_slab_top",
+    "name":"Stone Slab",
+    "jp":"焼き石ハーフブロック",
+    "per":0
+  },
+  {
+    "id":"chiseled_stone_bricks",
+    "name":"Chiseled Stone Bricks",
+    "jp":"模様入り石レンガ",
+    "per":0
+  },
+  {
+    "id":"clay",
+    "name":"Clay",
+    "jp":"粘土",
+    "per":0
+  },
+  {
+    "id":"bricks",
+    "name":"Bricks",
+    "jp":"レンガ",
+    "per":0
+  },
+  {
+    "id":"podzol_top",
+    "name":"Podzol",
+    "jp":"ポドゾル",
+    "per":0
+  },
+  {
+    "id":"sand",
+    "name":"Sand",
+    "jp":"砂",
+    "per":0
+  },
+  {
+    "id":"sandstone_top",
+    "name":"Sandstone",
+    "jp":"砂岩",
+    "per":0
+  },
+  {
+    "id":"red_sand",
+    "name":"Red Sand",
+    "jp":"赤砂",
+    "per":0
+  },
+  {
+    "id":"red_sandstone_top",
+    "name":"Red Sandstone",
+    "jp":"赤砂岩",
+    "per":0
+  },
+  {
+    "id":"oak_planks",
+    "name":"Oak Planks",
+    "jp":"オークの木材",
+    "per":0
+  },
+  {
+    "id":"birch_planks",
+    "name":"Birch Planks",
+    "jp":"白樺の木材",
+    "per":0
+  },
+  {
+    "id":"spruce_planks",
+    "name":"Spruce Planks",
+    "jp":"松の木材",
+    "per":0
+  },
+  {
+    "id":"acacia_planks",
+    "name":"Acacia Planks",
+    "jp":"アカシアの木材",
+    "per":0
+  },
+  {
+    "id":"dark_oak_planks",
+    "name":"Dark Oak Planks",
+    "jp":"ダークオークの木材",
+    "per":0
+  },
+  {
+    "id":"prismarine_bricks",
+    "name":"Prismarine Bricks",
+    "jp":"プリズマリンレンガ",
+    "per":0
+  },
+  {
+    "id":"dark_prismarine",
+    "name":"Dark Prismarine",
+    "jp":"ダークプリズマリン",
+    "per":0
+  },
+  {
+    "id":"end_stone",
+    "name":"End Stone",
+    "jp":"エンドストーン",
+    "per":0
+  },
+  {
+    "id":"end_stone_bricks",
+    "name":"End Stone Bricks",
+    "jp":"エンドストーンレンガ",
+    "per":0
+  },
+  {
+    "id":"purpur_block",
+    "name":"Purpur Block",
+    "jp":"プルプァブロック",
+    "per":0
+  },
+  {
+    "id":"purpur_pillar_top",
+    "name":"Purpur Pillar",
+    "jp":"柱状プルプァブロック",
+    "per":0
+  },
+  {
+    "id":"nether_bricks",
+    "name":"Nether Bricks",
+    "jp":"ネザーレンガ",
+    "per":0
+  },
+  {
+    "id":"red_nether_bricks",
+    "name":"Red Nether Bricks",
+    "jp":"赤いネザーレンガ",
+    "per":0
+  },
+  {
+    "id":"netherrack",
+    "name":"Netherrack",
+    "jp":"ネザーラック",
+    "per":0
+  },
+  {
+    "id":"nether_wart_block",
+    "name":"Nether Wart Block",
+    "jp":"ネザーウォートブロック",
+    "per":0
+  },
+  {
+    "id":"quartz_block_top",
+    "name":"Quartz Block",
+    "jp":"クウォーツブロック",
+    "per":0
+  },
+  {
+    "id":"quartz_pillar_top",
+    "name":"Quartz Pillar",
+    "jp":"柱状クウォーツブロック",
+    "per":0
+  },
+  {
+    "id":"chiseled_quartz_block_top",
+    "name":"Chiseled Quartz Block",
+    "jp":"模様入りクォーツブロック",
+    "per":0
+  },
+  {
+    "id":"terracotta",
+    "name":"Terracotta",
+    "jp":"テラコッタ",
+    "per":0
+  },
+  {
+    "id":"white_terracotta",
+    "name":"White Terracotta",
+    "jp":"白色のテラコッタ",
+    "per":0
+  },
+  {
+    "id":"light_gray_terracotta",
+    "name":"Light Gray Terracotta",
+    "jp":"薄灰色のテラコッタ",
+    "per":0
+  },
+  {
+    "id":"cyan_terracotta",
+    "name":"Cyan Terracotta",
+    "jp":"水色のテラコッタ",
+    "per":0
+  },
+  {
+    "id":"brown_terracotta",
+    "name":"Brown Terracotta",
+    "jp":"茶色のテラコッタ",
+    "per":0
+  },
+  {
+    "id":"gray_terracotta",
+    "name":"Gray Terracotta",
+    "jp":"灰色のテラコッタ",
+    "per":0
+  },
+  {
+    "id":"black_terracotta",
+    "name":"Black Terracotta",
+    "jp":"黒色のテラコッタ",
+    "per":0
+  },
+  {
+    "id":"red_terracotta",
+    "name":"Red Terracotta",
+    "jp":"赤色のテラコッタ",
+    "per":0
+  },
+  {
+    "id":"mushroom_block_inside",
+    "name":"Mushroom Block Inside",
+    "jp":"きのこブロック",
+    "per":0
+  },
+  {
+    "id":"mycelium_top",
+    "name":"Mycelium_top",
+    "jp":"菌糸",
+    "per":0
+  },
+  {
+    "id":"mushroom_block_inside",
+    "name":"Mushroom Block Inside",
+    "jp":"きのこブロック(内側)",
+    "per":0
+  },
+  {
+    "id":"mushroom_stem",
+    "name":"Mushroom Stem",
+    "jp":"きのこブロック(幹)",
+    "per":0
   }
 ]

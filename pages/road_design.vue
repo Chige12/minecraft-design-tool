@@ -3,7 +3,7 @@
   Canvas(:blocks="select_block_data" ref="canvas").canvas-parent
   .block-lists
     .block-list(v-for="(sel_block,sel_block_id) in select_block_data" :key="`key-${sel_block_id}`")
-      BlockSelect(@blockSelect="blockSelect" :block="sel_block" :disabled="disabled")
+      BlockSelect(@blockSelect="blockSelect" @blockDelete="blockDelete" :block="sel_block" :disabled="disabled")
     .button.list-add-button(@click="blockAdd()")
       v-icon.icon fas fa-plus
       .text ブロックを追加
@@ -65,6 +65,9 @@ export default {
       }
       console.log(list_id)
       this.forcePercent(list_id)
+    },
+    blockDelete(id){
+      this.select_block_data.splice(id, 1);
     },
     forcePercent(id){
       var total_percent = 0

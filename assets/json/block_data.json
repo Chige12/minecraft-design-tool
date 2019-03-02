@@ -24,6 +24,12 @@
     "per":0
   },
   {
+    "id":"stone",
+    "name":"Stone",
+    "jp":"焼石",
+    "per":0
+  },
+  {
     "id":"gravel",
     "name":"Gravel",
     "jp":"砂利",

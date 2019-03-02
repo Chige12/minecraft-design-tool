@@ -8,8 +8,10 @@
           .block-text
             .jpName {{block.jp}}
             .enName {{block.name}}
+          //- .block-delete(@click="blockDelete()")
+            v-icon.icon fas fa-times-circle
         .percent
-          v-slider(v-model="block.per" :label="`${block.per}%`" inverse-label @change="blockPerChange" thumb-label :disabled="disabled")
+          v-slider(v-model="block.per" :label="`${block.per}%`" @change="blockPerChange" thumb-label :disabled="disabled")
       .selector-lists(v-if="selector_list_open")
         .selector-list(v-for="(list_block,list_block_id) in block_data" :key="`key-${list_block_id}`" :class="{'active':(block.id==list_block.id)}")
           .select_button(@click="blockSelect(list_block_id)")
@@ -49,6 +51,9 @@ export default {
     },
     blockPerChange(){
       this.$emit('blockSelect',this.block);
+    },
+    blockDelete(){
+      this.$emit('blockDelete',this.block.list_id);
     }
   }
 }

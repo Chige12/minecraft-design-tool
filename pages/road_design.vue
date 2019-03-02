@@ -137,6 +137,7 @@ export default {
 <style lang="scss">
 .road_design{
   position: relative;
+  height: auto;
   .view_box {
     display: flex;
     flex-wrap: nowrap;

@@ -1,6 +1,6 @@
 <template lang="pug">
   .canvas
-    canvas#canvas(width="800px" height="400px")
+    canvas#canvas(width="1200px" height="400px")
 </template>
 <script>
 import BlockData from '~/assets/json/block_data.json'
@@ -9,7 +9,7 @@ export default {
   data(){
     return {
       canvas:{
-        width:"800",
+        width:"1200",
         height:"400"
       },
       image_size: 30,
@@ -127,14 +127,11 @@ export default {
 }
 </script>
 <style lang="scss">
-.canvas {
-  position: relative;
-  canvas{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 800px;
-    height: 400px;
-  }
+canvas{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1200px;
+  height: 400px;
 }
 </style>

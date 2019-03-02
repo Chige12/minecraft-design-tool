@@ -1,32 +1,35 @@
 <template lang="pug">
   .blockSelector
     .selector
-      .list-openButton(@click="blockSelectorOpen()")
-        .block-image
-          img.image(:src="`../block/${block.id}.png`")
-        .block-text
-          .jpName {{block.jp}}
-          .enName {{block.name}}
+      .blockData-list
+        .list-openButton(@click="blockSelectorOpen()")
+          .block-image
+            img.image(:src="`../block/${block.id}.png`")
+          .block-text
+            .jpName {{block.jp}}
+            .enName {{block.name}}
+        .percent
+          v-slider(v-model="block.per" :label="`${block.per}%`" inverse-label @change="blockPerChange" thumb-label :disabled="disabled")
       .selector-lists(v-if="selector_list_open")
-        .selector-list(v-for="(list_block,list_block_id) in block_data" :key="`key-${list_block_id}`")
+        .selector-list(v-for="(list_block,list_block_id) in block_data" :key="`key-${list_block_id}`" :class="{'active':(block.id==list_block.id)}")
           .select_button(@click="blockSelect(list_block_id)")
             .list_block_image
               img.image(:src="`../block/${list_block.id}.png`")
             .list_block-text
               .name {{list_block.jp}}
-      .percent
-        v-slider(v-model="block.per" :label="`${block.per}%`" inverse-label @change="blockPerChange")
+      
 
 </template>
 <script>
 import BlockData from '~/assets/json/block_data.json'
 
 export default {
-  props:["block","list_id"],
+  props:["block","disabled"],
   data(){
     return{
       selector_list_open: false,
-      block_data: BlockData
+      block_data: BlockData,
+      
     }
   },
   methods:{
@@ -42,10 +45,10 @@ export default {
       this.block.name = this.block_data[id].name
       this.block.jp = this.block_data[id].jp
       this.selector_list_open = false
-      this.$emit('blockSelect',this.block,this.list_id);
+      this.$emit('blockSelect',this.block);
     },
     blockPerChange(){
-      this.$emit('blockSelect',this.block,this.list_id);
+      this.$emit('blockSelect',this.block);
     }
   }
 }
@@ -53,32 +56,75 @@ export default {
 <style lang="scss">
 .blockSelector{
   .selector{
-    .list-openButton{
+    position: relative;
+    padding: 0 18px;
+    .blockData-list{
+      display: flex;
+      flex-wrap: nowrap;
+      .list-openButton{
         display: flex;
         flex-wrap: nowrap;
+        align-items: center;
+        width: 230px;
+        flex-shrink: 0;
+        padding: 4px;
+        height: auto;
         cursor: pointer;
-      .block-image{
-        img.image {
-          display: inline-block;
-          width: 40px;
+        .block-image{
+          flex-shrink: 0;
           height: 40px;
-          image-rendering:pixelated;
+          img.image {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            image-rendering:pixelated;
+          }
+        }
+        .block-text{
+          padding-left: 12px;
+          width: auto;
+        }
+        &:hover{
+          background: #222;
         }
       }
-      .block-text{
-        padding-left: 12px;
+      .percent {
+        padding-left: 18px;
+        padding-top: 8px;
+        width: 100%;
+        .v-input--slider{
+          margin: 0;
+          .v-input__slot{
+            margin: 0;
+            .v-label {
+              width: 45px;
+            }
+          }
+          .v-messages{
+            display: none;
+          }
+        }
       }
     }
     .selector-lists{
-      position: relative;
+      position: absolute;
+      top: auto;
+      left: 18px;
+      z-index: 1000;
+      background: #222;
+      margin: auto;
+      width: 230px;
+      padding: 8px 0;
       .selector-list {
+        padding: 2px 16px;
         .select_button {
           display: flex;
           flex-wrap: nowrap;
+          align-items: center;
           cursor: pointer;
           .list_block_image {
             img.image {
-              display: inline-block;
+              display: block;
               width: 20px;
               height: 20px;
               image-rendering:pixelated;
@@ -88,17 +134,12 @@ export default {
             padding-left: 12px;
           }
         }
-      }
-    }
-    .percent {
-      .v-input--slider{
-        margin: 0;
-        .v-input__slot{
-          margin: 0;
-          .v-label {
-            width: 45px;
-          }
+        &:hover{
+          background: #151515;
         }
+      }
+      .active{
+        background: #121212;
       }
     }
   }

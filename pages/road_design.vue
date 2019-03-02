@@ -1,10 +1,15 @@
 <template lang="pug">
-  .block-list
+.road_design
+  Canvas(:blocks="select_block_data" ref="canvas").canvas-parent
+  .block-lists
     .block-list(v-for="(sel_block,sel_block_id) in select_block_data" :key="`key-${sel_block_id}`")
-      BlockSelect(@blockSelect="blockSelect" :block="sel_block" :list_id="sel_block.list_id")
-    .list-add-button(@click="blockAdd")
-      v-icon fas fa-plus
-    Canvas(:blocks="select_block_data" ref="canvas")
+      BlockSelect(@blockSelect="blockSelect" :block="sel_block" :disabled="disabled")
+    .button.list-add-button(@click="blockAdd()")
+      v-icon.icon fas fa-plus
+      .text ブロックを追加
+    .button.reload-Button(@click="draw()")
+      v-icon.icon fas fa-sync-alt
+      .text リロード
 </template>
 <script>
 import BlockSelect from '~/components/BlockSelect.vue'
@@ -36,13 +41,14 @@ export default {
           per: 100
         }
       ],
-      block_data: BlockData
+      block_data: BlockData,
+      disabled: true
     }
   },
   methods:{
-    blockSelect(block,id){
-      this.select_block_data[id] = block
-      this.forcePercent(id)
+    blockSelect(block){
+      this.select_block_data[block.list_id] = block
+      this.forcePercent(block.list_id)
     },
     blockAdd(){
       var list_id = this.select_block_data.length
@@ -54,7 +60,11 @@ export default {
         per: 0
       }
       this.select_block_data.push(block)
-      this.forcePercent(list_id+1)
+      if(this.select_block_data.length > 0){
+        this.disabled=false
+      }
+      console.log(list_id)
+      this.forcePercent(list_id)
     },
     forcePercent(id){
       var total_percent = 0
@@ -94,7 +104,7 @@ export default {
               this.select_block_data[i].per += 1
               count++
             }
-            if(Math.abs(Number(surplus) <= count)){
+            if(Math.abs(Number(surplus)) <= count){
               break;
             }
           }
@@ -114,7 +124,47 @@ export default {
 }
 </script>
 <style lang="scss">
-.list-box {
-  width: 200px;
+.road_design{
+  position: relative;
+  padding-top: 400px;
+  .canvas-parent {
+    position: absolute;
+    display: block;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 1200px;
+    height: 400px;
+  }
+  .block-lists {
+    margin-top: 40px;
+    .button {
+      width: 230px;
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: center;
+      margin: 2px;
+      padding: 2px;
+      margin-left: 18px;
+      background: #262626;
+      border-radius: 20px;
+      .icon {
+        display: block;
+        text-align: center;
+        font-size: 14px;
+        padding: 6px;
+        cursor: pointer;
+      }
+      .text{
+        width: 140px;
+        padding-left: 10px;
+      }
+      &:hover{
+        background: rgb(34, 34, 34);
+      }
+    }
+  }
 }
 </style>

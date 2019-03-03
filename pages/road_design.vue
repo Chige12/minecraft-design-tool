@@ -47,7 +47,7 @@ export default {
       road:{
         wid: 3,
         leng: 24
-      },
+      }
     }
   },
   methods:{

@@ -10,6 +10,9 @@
         v-text-field(v-model.number="road.wid" label="道幅" type="number" @change="roadWidChange()")
       .road_leng
         v-text-field(v-model.number="road.leng" label="道の長さ" type="number" @change="roadLengChange()")
+    .setting-property.setting-perspective
+      v-switch(v-model="perspective" :label="`3D表示 : ${perspective}`" color="success" @change="perspectiveChange()")
+      v-switch(v-model="view_image" :label="`スクショ重ね : ${view_image}`" :disabled="perspective==false" color="success" @change="viewImageChange()")
     
 </template>
 <script>
@@ -29,7 +32,9 @@ export default {
         per: 0
       },
       biomes:["plains","forest","desert","swamp","tundra"],
-      biome:"plains"
+      biome:"plains",
+      perspective:false,
+      view_image:false
     }
   },
   methods:{
@@ -44,6 +49,12 @@ export default {
     },
     biomeChange(){
       this.$emit('settingUpdate','biome',this.biome);
+    },
+    perspectiveChange(){
+      this.$emit('settingUpdate','perspective',this.perspective)
+    },
+    viewImageChange(){
+      this.$emit('settingUpdate','viewimage',this.view_image)
     }
   }
 }
@@ -52,13 +63,26 @@ export default {
 .setting{
   padding: 20px;
   .setting-property {
-    padding: 12px 0;
+    padding: 10px 0;
+  }
+  .setting-backimg {
+    margin-bottom: 6px;
   }
   .setting-road{
     display: flex;
     flex-wrap: nowrap;
     .road_leng{
       padding-left: 12px ;
+    }
+  }
+  .setting-perspective{
+    display: flex;
+    flex-wrap: nowrap;
+    .v-input {
+      margin: 0;
+      .v-input__slot {
+        margin: 0;
+      }
     }
   }
       

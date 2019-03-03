@@ -1,6 +1,8 @@
 <template lang="pug">
-  .canvas
-    canvas#canvas(width="1200px" height="500px")
+  .canvas(:class="{'perspective':perspective}")
+    .flat-scenery(v-if="loading==false")
+      img.back-image(:src="`../flat_scenery/flat_plains.png`" :class="{'view-image':view_image}")
+    canvas#canvas(width="1200px" height="1200px")
     .loading(v-if="loading")
       .loading-wrapper
         v-icon.icon fas fa-spinner
@@ -14,7 +16,7 @@ export default {
     return {
       canvas:{
         width:"1200",
-        height:"500"
+        height:"1200"
       },
       image_size: 30,
       backimg_id:'grass_plains',
@@ -23,6 +25,8 @@ export default {
       biomes:["plains","forest","desert","swamp","tundra"],
       biome:"plains",
       loading:true,
+      perspective:false,
+      view_image:false,
     }
   },
   mounted(){
@@ -167,8 +171,11 @@ export default {
         this.draw();
       }else if(property=='biome'){
         this.biome = data
-        console.log(this.biome)
         this.draw();
+      }else if(property=='perspective'){
+        this.perspective = data
+      }else if(property=='viewimage'){
+        this.view_image = data
       }
     }
   }
@@ -180,6 +187,37 @@ export default {
   width: 1200px;
   height: 500px;
   background: #44662e;
+  perspective: 800px;
+  overflow: hidden;
+  .flat-scenery {
+    background: #8CB0F9;
+    width: 100%;
+    height: 100%;
+    img.back-image {
+      position: absolute;
+      top: -200px;
+      left: 0;
+      width: 1200px;
+      height: auto;
+      opacity: 0;
+      transition: 1s ease-in-out;
+    }
+    img.view-image{
+      opacity: 1;
+    }
+  }
+  canvas{
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 1200px;
+    height: 1200px;
+    transition: 1s ease-in-out;
+    transform: rotateZ(0deg)rotateY(0deg)scale(1);
+  }
   .loading{
     position: absolute;
     width: 100%;
@@ -201,18 +239,16 @@ export default {
         font-size: 20px;
       }
     }
-
   }
 }
-canvas{
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 1200px;
-  height: 500px;
+.perspective {
+  canvas{
+    transform: rotateZ(90deg)rotateY(-80deg)scale(.865);
+  }
 }
+
 @keyframes loading {
-0% {transform: rotateZ(0deg)}
-100% {transform: rotateZ(360deg)}
+  0% {transform: rotateZ(0deg)}
+  100% {transform: rotateZ(360deg)}
 }
 </style>

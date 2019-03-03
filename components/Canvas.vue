@@ -193,6 +193,8 @@ export default {
     background: #8CB0F9;
     width: 100%;
     height: 100%;
+    transition: 1s ease-in-out;
+    opacity: 0;
     img.back-image {
       position: absolute;
       top: -200px;
@@ -244,6 +246,9 @@ export default {
 .perspective {
   canvas{
     transform: rotateZ(90deg)rotateY(-80deg)scale(.865);
+  }
+  .flat-scenery {
+    opacity: 1;
   }
 }
 
